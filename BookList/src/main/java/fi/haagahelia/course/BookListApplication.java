@@ -24,7 +24,7 @@ public class BookListApplication {
 		return (args) -> {
 			log.info("save a couple of books");
 			repository.save(new Book("name of the rose", "3454", 3, 3, 1));
-			repository.save(new Book("sdfd", "fgf", 5, 2, 1));	
+			repository.save(new Book("animal farm", "fgf", 5, 2, 1));	
 			
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
