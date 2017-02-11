@@ -29,6 +29,14 @@ public class Book {
 		 this.isbn = isbn;
 		 this.price = price;
 	 }
+	 
+	 public Book (String title, String author)
+	 {
+		 super();
+		 this.title = title;
+		 this.author = author;
+	
+	 }
 		
 	 public long getId() {
 		return id;
