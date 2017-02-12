@@ -29,6 +29,15 @@ public class Book {
 		 this.isbn = isbn;
 		 this.price = price;
 	 }
+	 public Book (String title, String author, long date, long isbn)
+	 {
+		 super();
+		 this.title = title;
+		 this.author = author;
+		 this.date = date;
+		 this.isbn = isbn;
+		
+	 }
 	 
 	 public Book (String title, String author)
 	 {
