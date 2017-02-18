@@ -9,6 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+
+
+import fi.haagahelia.course.domain.Category;
+import fi.haagahelia.course.domain.CategoryRepository;
 import fi.haagahelia.course.domain.Book;
 import fi.haagahelia.course.domain.BookRepository;
 
@@ -21,17 +25,22 @@ public class BookListApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository) {
+	public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository) {
 		return (args) -> {
 			log.info("save a couple of books");
-			repository.save(new Book("name of the rose", "3454", 3, 3, 1));
-			repository.save(new Book("animal farm", "fgf", 5, 2, 1));	
+			crepository.save(new Category("Fiction"));
+			crepository.save(new Category("History")); 
+			crepository.save(new Category("Thriller")); 
 			
-			log.info("fetch all books");
-			for (Book book : repository.findAll()) {
+			
+			
+			brepository.save(new Book("name of the rose", "eco", (long) 155, crepository.findByName("Fiction").get(0)));
+			brepository.save(new Book("animal farm", "orwell", (long) 55, crepository.findByName("History").get(0)));	
+			
+			log.info("fetch all books"); 
+			for (Book book : brepository.findAll()) {
 				log.info(book.toString());
-			}
-
+			} 
 		};
 	}
 }

@@ -1,26 +1,32 @@
 package fi.haagahelia.course.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	 long id;
-	 String title;
-	 String author;
-	 long date;
-	 long isbn;
-	 Double price;
+	 private Long id;
+	 private String title;
+	 private String author;	 
+
+	 private Long date;
+	
 	 
-	 public Book() {
-		 
-	 }
+	  @ManyToOne
+	  @JoinColumn(name = "categoryid")
+	  private Category category;
+
 	 
-	 public Book (String title, String author, long date, long isbn, double price)
+	 public Book() {}
+	 
+	/* public Book (String title, String author, long date, long isbn, double price, Category category)
 	 {
 		 super();
 		 this.title = title;
@@ -28,32 +34,29 @@ public class Book {
 		 this.date = date;
 		 this.isbn = isbn;
 		 this.price = price;
-	 }
-	 public Book (String title, String author, long date, long isbn)
+		 this.category = category;
+	 } */
+	 public Book (String title, String author, Long date, Category category)
 	 {
 		 super();
 		 this.title = title;
-		 this.author = author;
+		 this.author = author;		 
+	
 		 this.date = date;
-		 this.isbn = isbn;
-		
+		 this.category = category;
 	 }
 	 
-	 public Book (String title, String author)
-	 {
-		 super();
-		 this.title = title;
-		 this.author = author;
+
 	
-	 }
-		
-	 public long getId() {
+	
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -70,34 +73,30 @@ public class Book {
 		this.author = author;
 	}
 
-	public long getDate() {
+	
+
+	public Long getDate() {
 		return date;
 	}
 
-	public void setDate(long date) {
+	public void setDate(Long date) {
 		this.date = date;
 	}
 
-	public long getIsbn() {
-		return isbn;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setIsbn(long isbn) {
-		this.isbn = isbn;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
 	public String toString() {
-		return "Book title=" + title + ", author=" + author + ", date=" + date
-				+ ", isbn=" + isbn + ", price=" + price ;
+		if (this.category != null)
+			return "Book title=" + title + ", author=" + author +  "date" + date +  this.getCategory();		
+		else 
+		return "Book title=" + title + ", author=" + author;
 	}
 	
 	
