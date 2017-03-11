@@ -10,11 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
-
 import fi.haagahelia.course.domain.Category;
 import fi.haagahelia.course.domain.CategoryRepository;
 import fi.haagahelia.course.domain.Book;
 import fi.haagahelia.course.domain.BookRepository;
+import fi.haagahelia.course.domain.User;
+import fi.haagahelia.course.domain.UserRepository;
 
 @SpringBootApplication
 public class BookListApplication {
@@ -25,7 +26,7 @@ public class BookListApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository) {
+	public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository, UserRepository urepository) {
 		return (args) -> {
 			log.info("save a couple of books");
 			crepository.save(new Category("Fiction"));
@@ -36,6 +37,12 @@ public class BookListApplication {
 			
 			brepository.save(new Book("name of the rose", "eco", (long) 155, crepository.findByName("Fiction").get(0)));
 			brepository.save(new Book("animal farm", "orwell", (long) 55, crepository.findByName("History").get(0)));	
+			
+			// Create users: admin/admin user/user
+			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
+			User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
+			urepository.save(user1);
+			urepository.save(user2);
 			
 			log.info("fetch all books"); 
 			for (Book book : brepository.findAll()) {
